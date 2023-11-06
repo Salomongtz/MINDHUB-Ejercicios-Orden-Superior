@@ -96,9 +96,45 @@ console.log(filtrarPorAlcohol(beers, 5))
 //10. Generar una función que reciba como parámetro un array de cervezas, un nombre de propiedad y un valor booleano. Debe devolver un nuevo array con 10 cervezas ordenadas por la propiedad ingresada como segundo argumento, de manera ascendente si el tercero es true o descendente si es false.
 
 function ordenarPor(array, propiedad, ascendente) {
-    return ascendente ? array.map(beer => beer = { [propiedad]: beer[propiedad] }).toSorted((beer1, beer2) => beer1[propiedad] - beer2[propiedad]) : array.map(beer => beer = { [propiedad]: beer[propiedad] }).toSorted((beer1, beer2) => beer1[propiedad] - beer2[propiedad]).reverse()
+    return ascendente ? array.toSorted((beer1, beer2) => beer1[propiedad] - beer2[propiedad]).slice(0,10) : array.toSorted((beer1, beer2) => beer1[propiedad] - beer2[propiedad]).reverse().slice(0,10)
 }
 
-console.log(ordenarPor(beers, "abv", false))
+console.log(ordenarPor(beers, "abv", true))
 
 //11. Generar una función que reciba como parámetro un array de cervezas y un id de un elemento HTML donde se imprimirá la tabla. La función debe renderizar (renderizar, dibujar, pintar, llenar, etc) en un archivo html una tabla que contenga las columnas "Name", "ABV", "IBU", y una fila por cada elemento del array. Cada fila debe tener los datos que se piden de cada una de las cervezas.
+
+function crearTabla(array, elemento) {
+    const cervezas = array.map(beer => beer = { name: beer.name, abv: beer.abv, ibu: beer.ibu })
+    tabla = document.createElement("table")
+    tabla.innerHTML +=
+        `<table class="">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>ABV</th>
+            <th>IBU</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+    </table>`
+    tbody = tabla.querySelector("tbody")
+    console.log(tbody)
+    for (item of array) {
+        tbody.innerHTML +=
+        `
+        <tr> 
+        <td>${item.name}</td>
+        <td>${item.abv}</td>
+        <td>${item.ibu}</td>
+        </tr>
+        `
+    }
+    console.log(tbody)
+    elemento.appendChild(tabla)
+    console.log(tabla)
+}
+
+main = document.querySelector("main")
+
+crearTabla(beers, main)
